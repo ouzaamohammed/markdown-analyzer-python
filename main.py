@@ -1,9 +1,39 @@
 import sys
 
+
 def get_markdown(path):
-    with open(path) as f:
-        markdown = f.read()
-        return markdown
+    try:
+        with open(path) as f:
+            markdown = f.read()
+            return markdown
+    except:
+        print("path don't exists")
+        sys.exit(0)
+
+
+def isHeading(block):
+    if (
+        block.startswith("# ")
+        or block.startswith("## ")
+        or block.startswith("### ")
+        or block.startswith("#### ")
+        or block.startswith("##### ")
+        or block.startswith("###### ")
+    ):
+        return True
+    return False
+
+
+def count_heading_words(markdown):
+    count = 0
+    blocks = markdown.split("\n\n")
+    for block in blocks:
+        if isHeading(block):
+            # remove any leading # and leading/trailing whitespaces
+            stripped_block = block.lstrip("#").strip()
+            count += len(stripped_block.split())
+    return count
+
 
 def main():
     # check if path is passed
@@ -13,7 +43,10 @@ def main():
 
     path = sys.argv[1]
     markdown = get_markdown(path)
-    print(markdown)
+
+    heading_words_count = count_heading_words(markdown)
+    print(f"heading words count: {heading_words_count}")
+
 
 if __name__ == "__main__":
     main()
