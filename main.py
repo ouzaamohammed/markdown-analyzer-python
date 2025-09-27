@@ -76,6 +76,16 @@ def count_list_words(markdown):
     return count
 
 
+def count_paragraph_words(markdown):
+    count = 0
+    blocks = markdown.split("\n\n")
+    for block in blocks:
+        if is_heading(block) or is_ordered_list(block) or is_unordered_list(block):
+            continue
+        count += len(block.split())
+    return count
+
+
 def main():
     # check if path is passed
     if len(sys.argv) != 2:
@@ -90,6 +100,9 @@ def main():
 
     list_words_count = count_list_words(markdown)
     print(f"list words count: {list_words_count}")
+
+    paragraph_words_count = count_paragraph_words(markdown)
+    print(f"paragraph words count: {paragraph_words_count}")
 
 
 if __name__ == "__main__":

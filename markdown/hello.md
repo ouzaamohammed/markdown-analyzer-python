@@ -10,3 +10,5 @@ this is a hello world
 
 1. this is an
 2. ordered list
+
+This project is awesome. It helps you count words in Markdown.
