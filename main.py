@@ -92,17 +92,24 @@ def main():
         print("Usage: python3 main.py <path_to_markdown>")
         sys.exit(1)
 
-    path = sys.argv[1]
-    markdown = get_markdown(path)
+    filepath = sys.argv[1]
+    markdown = get_markdown(filepath)
 
-    heading_words_count = count_heading_words(markdown)
-    print(f"heading words count: {heading_words_count}")
+    heading_words = count_heading_words(markdown)
+    list_words = count_list_words(markdown)
+    paragraph_words = count_paragraph_words(markdown)
+    total_words = heading_words + list_words + paragraph_words
 
-    list_words_count = count_list_words(markdown)
-    print(f"list words count: {list_words_count}")
-
-    paragraph_words_count = count_paragraph_words(markdown)
-    print(f"paragraph words count: {paragraph_words_count}")
+    print("============ MARKDOWNBOT ============")
+    print(f"Analyzing markdown found at {filepath}...")
+    print("----------- Word Count ----------")
+    print(f"Found {total_words} total words")
+    print("--------- Heading Count -------")
+    print(f"Found {heading_words} heading words")
+    print("--------- List Count -------")
+    print(f"Found {list_words} list words")
+    print("--------- Paragraph Count -------")
+    print(f"Found {paragraph_words} paragraph words")
 
 
 if __name__ == "__main__":
