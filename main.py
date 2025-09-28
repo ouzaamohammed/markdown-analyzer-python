@@ -1,4 +1,5 @@
 import sys
+import re
 
 
 def get_markdown(path):
@@ -108,6 +109,18 @@ def count_code_blocks(markdown):
     return count
 
 
+def count_images(markdown):
+    # extract a list of images from markdown
+    images = re.findall(r"\s!\[(.*?)\]\((.*?)\)\s", markdown)
+    return len(images)
+
+
+def count_links(markdown):
+    # extract a list of links from markdown
+    links = re.findall(r"\s\[(.*?)\]\((.*?)\)\s", markdown)
+    return len(links)
+
+
 def main():
     # check if path is passed
     if len(sys.argv) != 2:
@@ -122,6 +135,8 @@ def main():
     paragraph_words = count_paragraph_words(markdown)
     total_words = heading_words + list_words + paragraph_words
     code_blocks_ignored = count_code_blocks(markdown)
+    images = count_images(markdown)
+    links = count_links(markdown)
 
     print("============ MARKDOWNBOT ============")
     print(f"Analyzing markdown found at {filepath}...")
@@ -135,6 +150,10 @@ def main():
     print(f"Found {paragraph_words} paragraph words")
     print("--------- Code Blocks Ignored -------")
     print(f"Found {code_blocks_ignored} code blocks")
+    print("--------- Images -------")
+    print(f"Found {images} images")
+    print("--------- Links -------")
+    print(f"Found {links} links")
 
 
 if __name__ == "__main__":

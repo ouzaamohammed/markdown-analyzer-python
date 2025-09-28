@@ -20,3 +20,9 @@ print("this is a code block")
 ```sh
 echo "this is a bash script"
 ```
+
+![image](image line)
+
+![another image](image line)
+
+[this a link](https://google.com)
