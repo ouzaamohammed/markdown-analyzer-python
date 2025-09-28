@@ -12,3 +12,11 @@ this is a hello world
 2. ordered list
 
 This project is awesome. It helps you count words in Markdown.
+
+```py
+print("this is a code block")
+```
+
+```sh
+echo "this is a bash script"
+```

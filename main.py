@@ -80,9 +80,31 @@ def count_paragraph_words(markdown):
     count = 0
     blocks = markdown.split("\n\n")
     for block in blocks:
-        if is_heading(block) or is_ordered_list(block) or is_unordered_list(block):
+        if (
+            is_heading(block)
+            or is_ordered_list(block)
+            or is_unordered_list(block)
+            or is_code_block(block)
+        ):
             continue
         count += len(block.split())
+    return count
+
+
+def is_code_block(block):
+    lines = block.split("\n")
+    non_empty_lines = list(filter(lambda el: el != "", lines))
+    return non_empty_lines[0].startswith("```") and non_empty_lines[-1].startswith(
+        "```"
+    )
+
+
+def count_code_blocks(markdown):
+    count = 0
+    blocks = markdown.split("\n\n")
+    for block in blocks:
+        if is_code_block(block):
+            count += 1
     return count
 
 
@@ -99,6 +121,7 @@ def main():
     list_words = count_list_words(markdown)
     paragraph_words = count_paragraph_words(markdown)
     total_words = heading_words + list_words + paragraph_words
+    code_blocks_ignored = count_code_blocks(markdown)
 
     print("============ MARKDOWNBOT ============")
     print(f"Analyzing markdown found at {filepath}...")
@@ -110,6 +133,8 @@ def main():
     print(f"Found {list_words} list words")
     print("--------- Paragraph Count -------")
     print(f"Found {paragraph_words} paragraph words")
+    print("--------- Code Blocks Ignored -------")
+    print(f"Found {code_blocks_ignored} code blocks")
 
 
 if __name__ == "__main__":
